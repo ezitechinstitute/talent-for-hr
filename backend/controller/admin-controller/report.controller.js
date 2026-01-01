@@ -1,7 +1,7 @@
 // These are the models for report and analytics
 import reportManagement from "../../models/admin-model/reports-management/report.management.js";
 import PDFDocument from "pdfkit";
-import ExcelJS from "exceljs";
+// import ExcelJS from "exceljs";
 
 
 //----Report controllers-----
