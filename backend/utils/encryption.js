@@ -1,4 +1,4 @@
-import crypto from "crypto";
+const crypto = require("crypto");
 
 const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || crypto.randomBytes(32).toString('hex');
 const ALGORITHM = 'aes-256-cbc';
@@ -8,9 +8,9 @@ const ALGORITHM = 'aes-256-cbc';
  * @param {string} text - Text to encrypt
  * @returns {string} Encrypted text
  */
-export const encrypt = (text) => {
+const encrypt = (text) => {
   if (!text) return null;
-  
+
   try {
     const iv = crypto.randomBytes(16);
     const cipher = crypto.createCipheriv(ALGORITHM, Buffer.from(ENCRYPTION_KEY.slice(0, 32)), iv);
@@ -28,9 +28,9 @@ export const encrypt = (text) => {
  * @param {string} encryptedText - Encrypted text
  * @returns {string} Decrypted text
  */
-export const decrypt = (encryptedText) => {
+const decrypt = (encryptedText) => {
   if (!encryptedText) return null;
-  
+
   try {
     const parts = encryptedText.split(':');
     const iv = Buffer.from(parts[0], 'hex');
@@ -50,8 +50,10 @@ export const decrypt = (encryptedText) => {
  * @param {string} text - Text to mask
  * @returns {string} Masked text
  */
-export const maskSensitiveData = (text) => {
+const maskSensitiveData = (text) => {
   if (!text || text.length <= 8) return '****';
   return text.slice(0, 4) + '****' + text.slice(-4);
 };
+
+module.exports = { encrypt, decrypt, maskSensitiveData };
 

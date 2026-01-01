@@ -1,47 +1,50 @@
-import express, { Router } from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
-import db from "./config/db.js";
-import router from "./routes/admin-routes/admin.routes.js";
-import authRouter from "./routes/auth/auth.routes.js";
-import activityLogger from "./middlewares/activityLogger.js";
-import systemErrorHandler from "./middlewares/systemErrorHandler.js";
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+const db = require("./config/db.js");
+const router = require("./routes/admin-routes/admin.routes.js");
+const authRouter = require("./routes/auth/auth.routes.js");
+const activityLogger = require("./middlewares/activityLogger.js");
+const systemErrorHandler = require("./middlewares/systemErrorHandler.js");
 // Startup Manager
-import startupManager from "./startup-manager/startupManager.js";
-await startupManager.startupManager();
+const startupManager = require("./startup-manager/startupManager.js");
 
-dotenv.config();
+(async () => {
+  await startupManager.startupManager();
 
-const PORT = process.env.PORT || 5000;
-const app = express();
+  dotenv.config();
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
+  const PORT = process.env.PORT || 5000;
+  const app = express();
 
-// Activity Logger Middleware
-app.use(activityLogger);
+  app.use(
+    cors({
+      origin: "http://localhost:5173",
+      credentials: true,
+    })
+  );
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
-app.use(cookieParser());
-// Routes
-app.get("/", (req, res) => {
-  res.send("Server is running!");
-});
+  // Activity Logger Middleware
+  app.use(activityLogger);
 
-app.use("/api/auth", authRouter);
-app.use("/api/admin", router);
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.static("public"));
+  app.use(cookieParser());
+  // Routes
+  app.get("/", (req, res) => {
+    res.send("Server is running!");
+  });
 
-// System Error Handler Middleware
-app.use(systemErrorHandler);
+  app.use("/api/auth", authRouter);
+  app.use("/api/admin", router);
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+  // System Error Handler Middleware
+  app.use(systemErrorHandler);
+
+  // Start Server
+  app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+  });
+})();

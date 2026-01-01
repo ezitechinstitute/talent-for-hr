@@ -1,5 +1,5 @@
-import { v2 as cloudinary } from "cloudinary";
-import fs from "fs";
+const cloudinary = require("cloudinary").v2;
+const fs = require("fs");
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -11,12 +11,9 @@ const uploadToCloudinary = async (localFilePath) => {
   try {
     if (!localFilePath) return null;
 
-    const response = await cloudinary.uploader.upload(
-      localFilePath,
-      {
-        resource_type: "auto",
-      }
-    );
+    const response = await cloudinary.uploader.upload(localFilePath, {
+      resource_type: "auto",
+    });
 
     console.log("Cloudinary upload response:", response.url);
 
@@ -25,11 +22,10 @@ const uploadToCloudinary = async (localFilePath) => {
     return response;
   } catch (error) {
     console.error("Error uploading to Cloudinary:", error);
-    fs.unlinkSync(localFilePath);
+    try { fs.unlinkSync(localFilePath); } catch (e) {}
     return null;
   }
 };
-
 
 const deleteFromCloudinary = async (publicId) => {
   try {
@@ -42,4 +38,4 @@ const deleteFromCloudinary = async (publicId) => {
   }
 };
 
-export { uploadToCloudinary, deleteFromCloudinary };
+module.exports = { uploadToCloudinary, deleteFromCloudinary };

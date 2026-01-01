@@ -1,19 +1,19 @@
-import express from "express";
-import verificationRoutes from "../admin-routes/verification.routes.js";
-import reportRoutes from "../admin-routes/reports.routes.js";
-import roleRoutes from "../admin-routes/role.routes.js";
-import dashboardRoutes from "../admin-routes/dashboard.routes.js";
-import matchingAlgorithmRoutes from "../admin-routes/matchingAlgorithm.routes.js";
-import activityLogsRoutes from "../admin-routes/activityLog.routes.js";
-import authenticateToken from "../../middlewares/authenticateToken.js";
-import jobInternshipRoutes from "./job-internship.routes.js";
-import notificationRoutes from "./notification.routes.js";
-import cmsRoutes from "./cms.routes.js";
-import userManagementRoutes from "./userManagement.routes.js";
+const express = require("express");
+const verificationRoutes = require("../admin-routes/verification.routes.js");
+const reportRoutes = require("../admin-routes/reports.routes.js");
+const roleRoutes = require("../admin-routes/role.routes.js");
+const dashboardRoutes = require("../admin-routes/dashboard.routes.js");
+const matchingAlgorithmRoutes = require("../admin-routes/matchingAlgorithm.routes.js");
+const activityLogsRoutes = require("../admin-routes/activityLog.routes.js");
+const authenticateToken = require("../../middlewares/authenticateToken.js");
+const jobInternshipRoutes = require("./job-internship.routes.js");
+const notificationRoutes = require("./notification.routes.js");
+const cmsRoutes = require("./cms.routes.js");
+const userManagementRoutes = require("./userManagement.routes.js");
 // New route imports for separated modules
-import candidateAssessmentRoutes from "./candidate-assessment.routes.js";
-import portalSettingsRoutes from "./portal-settings.routes.js";
-import supportTicketingRoutes from "./support-ticketing.routes.js";
+const candidateAssessmentRoutes = require("./candidate-assessment.routes.js");
+const portalSettingsRoutes = require("./portal-settings.routes.js");
+const supportTicketingRoutes = require("./support-ticketing.routes.js");
 
 const router = express.Router();
 
@@ -45,4 +45,4 @@ router.use("/v1", candidateAssessmentRoutes);
 router.use("/v1", portalSettingsRoutes);
 router.use("/v1", supportTicketingRoutes);
 
-export default router;
+module.exports = router;

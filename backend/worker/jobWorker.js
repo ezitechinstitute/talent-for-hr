@@ -1,5 +1,5 @@
-import db from "../config/db.js";
-import matchQueue from "../models/admin-model/matching-alogrithm-control/model.matchQueue.js";
+const db = require("../config/db.js");
+const matchQueue = require("../models/admin-model/matching-alogrithm-control/model.matchQueue.js");
 
 const processJob = async (queueId, jobId) => {
   try {
@@ -12,7 +12,7 @@ const processJob = async (queueId, jobId) => {
   }
 };
 
-export const startWorker = async () => {
+const startWorker = async () => {
   console.log("Worker started...");
 
   setInterval(async () => {
@@ -31,4 +31,4 @@ export const startWorker = async () => {
   }, 5000);
 };
 
-export default { startWorker };
+module.exports = { startWorker };
