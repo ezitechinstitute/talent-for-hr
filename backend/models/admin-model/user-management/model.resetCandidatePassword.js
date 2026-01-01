@@ -1,5 +1,5 @@
 import db from "../../../config/db.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 const resetCandidatePassword = async (id, newPassword) => {
     const hashed = await bcrypt.hash(newPassword, 10);

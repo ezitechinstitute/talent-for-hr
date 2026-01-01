@@ -1,6 +1,6 @@
 import db from "../../config/db.js";
 import { Resend } from "resend";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
