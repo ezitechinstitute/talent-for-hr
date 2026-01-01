@@ -18,6 +18,9 @@ const {
 } = userTable
 
 const initializeTables = async () => {
+   //for auth
+  await createUserTable();
+  await verificationTokens();
   await verificationManagementTable();
   await getAdminDashboardTable();
   await matchingAlgorithmControlTables();
@@ -27,9 +30,7 @@ const initializeTables = async () => {
   await notificationsTable();
   await createAssessmentTables();
   
-  //for auth
-  await createUserTable();
-  await verificationTokens();
+ 
 };
 
 module.exports = { initializeTables };
