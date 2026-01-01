@@ -1,20 +1,20 @@
-import db from "../../config/db.js";
+const db = require("../../config/db.js");
 
 // These models are being imported from admin-model/candidate-assessment
-import assessmentModel from "../../models/admin-model/candidate-assessment/model.assessments.js";
-import questionModel from "../../models/admin-model/candidate-assessment/model.questions.js";
-import resultModel from "../../models/admin-model/candidate-assessment/model.results.js";
-import answerModel from "../../models/admin-model/candidate-assessment/model.answers.js";
+const assessmentModel = require("../../models/admin-model/candidate-assessment/model.assessments.js");
+const questionModel = require("../../models/admin-model/candidate-assessment/model.questions.js");
+const resultModel = require("../../models/admin-model/candidate-assessment/model.results.js");
+const answerModel = require("../../models/admin-model/candidate-assessment/model.answers.js");
 
 // Utilities
-import {
+const {
   isValidAssessmentStatus,
   isValidQuestionType,
-} from "../../utils/validations.js";
+} = require("../../utils/validations.js");
 
 // These are the models for notification management
-import emailService from "../../services/email.service.js";
-import notificationService from "../../models/admin-model/notification-management/model.notification.js";
+const emailService = require("../../services/email.service.js");
+const notificationService = require("../../models/admin-model/notification-management/model.notification.js");
 
 // ==================== Candidate Assessment Module ====================
 
@@ -774,7 +774,7 @@ const getAnswersByResultId = async (req, res) => {
   }
 };
 
-export default {
+module.exports = {
   // Assessment Controllers
   createAssessment,
   getAssessments,

@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 /**
  * Portal Settings Module - SMTP Settings Model
@@ -111,7 +111,7 @@ const testSMTPConnection = async () => {
   }
 };
 
-export default {
+module.exports = {
   getSMTPSettings,
   updateSMTPSettings,
   testSMTPConnection

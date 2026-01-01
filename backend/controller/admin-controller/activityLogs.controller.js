@@ -1,4 +1,4 @@
-import activityLogsModel from "../../models/admin-model/activity-logs/model.activityLogs.js";
+const activityLogsModel = require('../../models/admin-model/activity-logs/model.activityLogs.js');
 
 // Activity Logs
 const logActivity = async (req, res, next) => {
@@ -15,4 +15,4 @@ const logActivity = async (req, res, next) => {
   next();
 };
 
-export default logActivity;
+module.exports = logActivity;

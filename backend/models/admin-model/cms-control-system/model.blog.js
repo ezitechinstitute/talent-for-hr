@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const blogModel = {
     async getAll() {
@@ -26,4 +26,4 @@ const blogModel = {
 };
 
 
-export default blogModel;
+module.exports = blogModel;

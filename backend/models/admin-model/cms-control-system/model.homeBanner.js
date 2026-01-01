@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const homeBannerModel = {
     async getAll() {
@@ -57,4 +57,4 @@ const homeBannerModel = {
     }
 };
 
-export default homeBannerModel;
+module.exports = homeBannerModel;

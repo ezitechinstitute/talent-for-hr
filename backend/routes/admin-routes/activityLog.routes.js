@@ -1,7 +1,7 @@
-import express from "express";
-import logActivity from "../../controller/admin-controller/activityLogs.controller.js";
-import asyncHandler from "../../middlewares/asyncHandler.js";
-import checkPermission from "../../middlewares/permission.middleware.js";
+const express = require('express');
+const logActivity = require('../../controller/admin-controller/activityLogs.controller.js');
+const asyncHandler = require('../../middlewares/asyncHandler.js');
+const checkPermission = require('../../middlewares/permission.middleware.js');
 
 const router = express.Router();
 
@@ -15,4 +15,4 @@ router.post(
   }
 );
 
-export default router;
+module.exports = router;

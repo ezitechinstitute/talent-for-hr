@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const applyInternship = async ({ internship_id, candidate_id, resume_url, cover_letter, application_source }) => {
   const sql = `INSERT INTO internship_applicants (internship_id, candidate_id, resume_url, cover_letter, application_source)
@@ -67,7 +67,7 @@ const updateApplicationStatus = async (applicationId, internshipId, status, upda
   return res;
 };
 
-export default {
+module.exports = {
   applyInternship,
   getApplicantsByInternship,
   updateApplicationStatus,

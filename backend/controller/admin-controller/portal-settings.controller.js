@@ -1,17 +1,17 @@
 // These models are being imported from admin-model/portal-settings
-import platformConfigModel from "../../models/admin-model/portal-settings/model.platformConfig.js";
-import smtpSettingsModel from "../../models/admin-model/portal-settings/model.smtpSettings.js";
-import smsSettingsModel from "../../models/admin-model/portal-settings/model.smsSettings.js";
-import paymentGatewayModel from "../../models/admin-model/portal-settings/model.paymentGateway.js";
-import databaseBackupModel from "../../models/admin-model/portal-settings/model.databaseBackup.js";
+const platformConfigModel = require('../../models/admin-model/portal-settings/model.platformConfig.js');
+const smtpSettingsModel = require('../../models/admin-model/portal-settings/model.smtpSettings.js');
+const smsSettingsModel = require('../../models/admin-model/portal-settings/model.smsSettings.js');
+const paymentGatewayModel = require('../../models/admin-model/portal-settings/model.paymentGateway.js');
+const databaseBackupModel = require('../../models/admin-model/portal-settings/model.databaseBackup.js');
 
 // Utilities
-import { encrypt, maskSensitiveData } from "../../utils/encryption.js";
-import {
+const { encrypt, maskSensitiveData } = require('../../utils/encryption.js');
+const {
   isValidEmail,
   isValidPort,
   isValidURL,
-} from "../../utils/validations.js";
+} = require("../../utils/validations.js");
 
 // ==================== Portal Settings Module ====================
 /**
@@ -314,7 +314,7 @@ const createBackupRecord = async (req, res) => {
   }
 };
 
-export default {
+module.exports = {
   // Platform Configuration
   getPlatformConfig,
   updatePlatformConfig,

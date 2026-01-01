@@ -1,8 +1,8 @@
-import getMulterStorage from "../../utils/multerStorage.js";
-import asyncHandler from "../../middlewares/asyncHandler.js";
-import cmsController from "../../controller/admin-controller/cms.controller.js";
-import express from 'express'
-import checkPermission from "../../middlewares/permission.middleware.js";
+const getMulterStorage = require('../../utils/multerStorage.js');
+const asyncHandler = require('../../middlewares/asyncHandler.js');
+const cmsController = require('../../controller/admin-controller/cms.controller.js');
+const express = require('express')
+const checkPermission = require('../../middlewares/permission.middleware.js');
 const router = express.Router();
 
 const {
@@ -70,4 +70,4 @@ router.post("/create-blog",checkPermission("cms", "create"), asyncHandler(create
 router.put("/update-blog/:id",checkPermission("cms", "update"), asyncHandler(updateBlogPost));
 router.delete("/delete-blog/:id",checkPermission("cms", "delete"), asyncHandler(deleteBlogPost));
 
-export default router
+module.exports = router

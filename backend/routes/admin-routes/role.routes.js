@@ -1,8 +1,8 @@
-import express from "express";
-import roleController from "../../controller/admin-controller/role.controller.js";
-import permissionController from "../../controller/admin-controller/permission.controller.js";
-import authorizeRoles from "../../middlewares/authorizeRoles.js";
-import asyncHandler from "../../middlewares/asyncHandler.js";
+const express = require('express');
+const roleController = require('../../controller/admin-controller/role.controller.js');
+const permissionController = require('../../controller/admin-controller/permission.controller.js');
+const authorizeRoles = require('../../middlewares/authorizeRoles.js');
+const asyncHandler = require('../../middlewares/asyncHandler.js');
 
 const router = express.Router();
 
@@ -33,4 +33,4 @@ router.put("/permissions/:id",authorizeRoles("super_admin"), asyncHandler(update
 router.get("/permission",authorizeRoles("super_admin"), asyncHandler(getRolePermission));
 router.delete("/permission/:id",authorizeRoles("super_admin"), asyncHandler(removePermissionFromRole));
 
-export default router;
+module.exports = router;

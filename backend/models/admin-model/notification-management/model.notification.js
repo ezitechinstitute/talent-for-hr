@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const createNotification = async ({
   user_id,
@@ -42,4 +42,4 @@ const getUnreadCount = async (user_id, user_type) => {
   return row.unread_count;
 };
 
-export default { createNotification, markAsRead, getUnreadCount };
+module.exports = { createNotification, markAsRead, getUnreadCount };

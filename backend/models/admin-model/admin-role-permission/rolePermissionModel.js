@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 //roles
 
@@ -79,8 +79,7 @@ const remove =async(id)=>{
 }
 
 
-export default
-{
+module.exports = {
     createRole,
     getAll,
     assignRole,

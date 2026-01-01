@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 // for getting new user registration report
 const newUserReport = async () => {
@@ -114,7 +114,7 @@ ORDER BY total_candidates DESC;
     const [rows] = await db.query(sql);
     return rows;
 };
-export default {
+module.exports = {
   newUserReport,
   verifiedInternshipReports,
   jobPostingTrendReport,

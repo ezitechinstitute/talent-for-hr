@@ -1,5 +1,5 @@
 // models/admin-model/user-management/model.getCandidateById.js
-import db from '../../../config/db.js';
+const db = require('../../../config/db.js');
 
 const getCandidateById = async (id) => {
   try {
@@ -13,4 +13,4 @@ const getCandidateById = async (id) => {
   }
 };
 
-export default getCandidateById;
+module.exports = getCandidateById;

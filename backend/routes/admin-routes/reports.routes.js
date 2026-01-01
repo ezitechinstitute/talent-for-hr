@@ -1,7 +1,7 @@
-import express from "express";
-import reportController from "../../controller/admin-controller/report.controller.js";
-import checkPermission from "../../middlewares/permission.middleware.js"
-import asyncHandler from "../../middlewares/asyncHandler.js";
+const express = require('express');
+const reportController = require('../../controller/admin-controller/report.controller.js');
+const checkPermission = require('../../middlewares/permission.middleware.js')
+const asyncHandler = require('../../middlewares/asyncHandler.js');
 
 const router = express.Router();
 
@@ -40,4 +40,4 @@ router.get(
 );
 router.get("/reports/export",checkPermission("reports", "read"), asyncHandler(exportReport));
 
-export default router;
+module.exports = router;

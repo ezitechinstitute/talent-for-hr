@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 /**
  * Portal Settings Module - Database Backup Model
@@ -134,7 +134,7 @@ const createBackupRecord = async (backupData) => {
   }
 };
 
-export default {
+module.exports = {
   getBackupSettings,
   updateBackupSettings,
   getBackupHistory,

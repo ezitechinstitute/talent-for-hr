@@ -1,14 +1,14 @@
-import {
+const {
   uploadToCloudinary,
   deleteFromCloudinary,
-} from "../../utils/cloudinary.js";
+} = require("../../utils/cloudinary.js");
 
-import privacyPolicyModel from "../../models/admin-model/cms-control-system/model.privacyPolicy.js";
-import termsModel from "../../models/admin-model/cms-control-system/model.terms.js";
-import blogModel from "../../models/admin-model/cms-control-system/model.blog.js";
-import faqModel from "../../models/admin-model/cms-control-system/model.faq.js";
-import aboutPageModel from "../../models/admin-model/cms-control-system/model.aboutpage.js";
-import homeBannerModel from "../../models/admin-model/cms-control-system/model.homeBanner.js";
+const privacyPolicyModel = require('../../models/admin-model/cms-control-system/model.privacyPolicy.js');
+const termsModel = require('../../models/admin-model/cms-control-system/model.terms.js');
+const blogModel = require('../../models/admin-model/cms-control-system/model.blog.js');
+const faqModel = require('../../models/admin-model/cms-control-system/model.faq.js');
+const aboutPageModel = require('../../models/admin-model/cms-control-system/model.aboutpage.js');
+const homeBannerModel = require('../../models/admin-model/cms-control-system/model.homeBanner.js');
 
 const getHomeBanners = async (req, res) => {
   try {
@@ -372,7 +372,7 @@ const updateTermsAndConditions = async (req, res) => {
   }
 };
 
-export default {
+module.exports = {
   getHomeBanners,
   createHomeBanner,
   deleteHomeBanner,

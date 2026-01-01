@@ -1,5 +1,5 @@
-import db from "../../../config/db.js";
-import { Parser } from "json2csv";
+const db = require('../../../config/db.js');
+const { Parser } = require('json2csv');
 
 const exportCandidatesCSV = async () => {
     const [rows] = await db.query("SELECT * FROM candidates");
@@ -10,4 +10,4 @@ const exportCandidatesCSV = async () => {
     return parser.parse(rows);
 };
 
-export default exportCandidatesCSV;
+module.exports = exportCandidatesCSV;

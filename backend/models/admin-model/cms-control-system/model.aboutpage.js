@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const aboutPageModel = {
     async get() {
@@ -23,4 +23,4 @@ const aboutPageModel = {
     }
 };
 
-export default aboutPageModel;
+module.exports = aboutPageModel;

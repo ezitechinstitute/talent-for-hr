@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const getAllCandidates = async (search = "") => {
   const sql = `SELECT * FROM candidates WHERE name LIKE ?`;
@@ -6,4 +6,4 @@ const getAllCandidates = async (search = "") => {
   return rows;
 };
 
-export default getAllCandidates;
+module.exports = getAllCandidates;

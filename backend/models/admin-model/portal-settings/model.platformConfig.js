@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 /**
  
@@ -97,7 +97,7 @@ const updatePlatformConfig = async (configData) => {
   }
 };
 
-export default {
+module.exports = {
   getPlatformConfig,
   updatePlatformConfig
 };

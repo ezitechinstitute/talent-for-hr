@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 // Function to get recent system health alerts
 const getSystemHealthAlerts = async () => {
@@ -20,4 +20,4 @@ const insertSystemError = async ({ type, message, path, method }) => {
   }
 };
 
-export default { getSystemHealthAlerts, insertSystemError };
+module.exports = { getSystemHealthAlerts, insertSystemError };

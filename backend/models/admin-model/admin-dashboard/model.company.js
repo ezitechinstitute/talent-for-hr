@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 // Function to get total number of companies
 const getAllCompanies = async () => {
@@ -34,4 +34,4 @@ const getMonthlyGrowth = async () => {
   }
 };
 
-export default { getAllCompanies, getPendingCompanies, getMonthlyGrowth };
+module.exports = { getAllCompanies, getPendingCompanies, getMonthlyGrowth };

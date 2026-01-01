@@ -1,8 +1,8 @@
-import db from "../../../../config/db.js";
-import notificationService from "../../notification-management/model.notification.js";
-import emailService from "../../../../services/email.service.js";
+const db = require('../../../../config/db.js');
+const notificationService = require('../../notification-management/model.notification.js');
+const emailService = require('../../../../services/email.service.js');
 
-export const handleVerificationStatusNotification = async ({
+const handleVerificationStatusNotification = async ({
   verificationId,
   status,
   adminRemarks,
@@ -170,3 +170,5 @@ export const handleVerificationStatusNotification = async ({
     );
   }
 };
+
+module.exports = { handleVerificationStatusNotification };

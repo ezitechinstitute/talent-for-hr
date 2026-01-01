@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 // Get all results for an assessment
 const getResultsByAssessmentId = async (assessmentId) => {
@@ -183,7 +183,7 @@ const getRecentSubmissions = async (limit = 10) => {
   }
 };
 
-export default {
+module.exports = {
   getResultsByAssessmentId,
   getResultById,
   getCandidateResult,

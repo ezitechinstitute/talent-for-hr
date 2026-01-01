@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 //for experience verification management
 const getPending = async () => {
@@ -80,7 +80,7 @@ const addRemarks = async (admin_remarks,id) => {
     throw err;
   }
 };
-export default {
+module.exports = {
   getPending,
   viewDocument,
   updateCandidateExperience,

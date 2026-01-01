@@ -1,8 +1,8 @@
-import matchingSettings from "../../models/admin-model/matching-alogrithm-control/model.matchingSettings.js";
-import matchingQueue from "../../models/admin-model/matching-alogrithm-control/model.matchQueue.js";
-import getCandidateById from "../../models/admin-model/user-management/model.getCandidateById.js";
-import matchingRecommand from "../../models/admin-model/matching-alogrithm-control/model.matchQueue.js";
-import db from "../../config/db.js";
+const matchingSettings = require('../../models/admin-model/matching-alogrithm-control/model.matchingSettings.js');
+const matchingQueue = require('../../models/admin-model/matching-alogrithm-control/model.matchQueue.js');
+const getCandidateById = require('../../models/admin-model/user-management/model.getCandidateById.js');
+const matchingRecommand = require('../../models/admin-model/matching-alogrithm-control/model.matchQueue.js');
+const db = require('../../config/db.js');
 
 // Matching Algorithm Control
 const getMatchingSettings = async (req, res) => {
@@ -184,7 +184,7 @@ const getUserRecommendations = async (req, res) => {
   });
 };
 
-export default {
+module.exports = {
   getMatchingSettings,
   updateMatchingSettings,
   toggleAutoMatching,

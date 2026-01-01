@@ -1,4 +1,4 @@
-import activityLogsModel from "../models/admin-model/activity-logs/model.activityLogs.js";
+const activityLogsModel = require('../models/admin-model/activity-logs/model.activityLogs.js');
 
 const activityLogger = (req, res, next) => {
   res.on("finish", () => {
@@ -24,4 +24,4 @@ const activityLogger = (req, res, next) => {
   next();
 };
 
-export default activityLogger;
+module.exports = activityLogger;

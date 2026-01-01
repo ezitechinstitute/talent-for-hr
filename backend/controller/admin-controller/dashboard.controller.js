@@ -1,7 +1,7 @@
-import candidateModel from "../../models/admin-model/admin-dashboard/model.candidate.js";
-import companyModel from "../../models/admin-model/admin-dashboard/model.company.js";
-import systemHealthModel from "../../models/admin-model/admin-dashboard/model.systemHealth.js";
-import activityLogsModel from "../../models/admin-model/activity-logs/model.activityLogs.js";
+const candidateModel = require('../../models/admin-model/admin-dashboard/model.candidate.js');
+const companyModel = require('../../models/admin-model/admin-dashboard/model.company.js');
+const systemHealthModel = require('../../models/admin-model/admin-dashboard/model.systemHealth.js');
+const activityLogsModel = require('../../models/admin-model/activity-logs/model.activityLogs.js');
 
 const getDashboardStats = async (req, res) => {
   const totalCandidates = await candidateModel.getAllCandidates();
@@ -25,4 +25,4 @@ const getDashboardStats = async (req, res) => {
   });
 };
 
-export default getDashboardStats;
+module.exports = getDashboardStats;

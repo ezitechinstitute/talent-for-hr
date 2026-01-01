@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const pendingSkill = async () => {
     const sql = `SELECT sv.id, c.name AS candidate_name, 
@@ -24,4 +24,4 @@ const updateAdminRemarks = async (id, admin_remarks) => {
     const [row] = await db.query(sql, [admin_remarks, id]);
     return row;
 };
-export default { pendingSkill, viewSkill, updateStatus, updateAdminRemarks };
+module.exports = { pendingSkill, viewSkill, updateStatus, updateAdminRemarks };

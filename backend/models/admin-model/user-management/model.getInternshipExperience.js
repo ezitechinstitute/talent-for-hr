@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const getInternshipExperience = async (id) => {
   const [rows] = await db.query(
@@ -8,4 +8,4 @@ const getInternshipExperience = async (id) => {
   return rows[0];
 };
 
-export default getInternshipExperience
+module.exports = getInternshipExperience

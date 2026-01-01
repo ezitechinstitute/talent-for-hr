@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const faqModel = {
     async getAll() {
@@ -25,4 +25,4 @@ const faqModel = {
     }
 };
 
-export default faqModel;
+module.exports = faqModel;

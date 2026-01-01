@@ -1,7 +1,7 @@
 // These are the models for report and analytics
-import reportManagement from "../../models/admin-model/reports-management/report.management.js";
-import PDFDocument from "pdfkit";
-import ExcelJS from "exceljs";
+const reportManagement = require('../../models/admin-model/reports-management/report.management.js');
+const PDFDocument = require('pdfkit');
+const ExcelJS = require('exceljs');
 
 
 //----Report controllers-----
@@ -181,7 +181,7 @@ const exportReport = async (req, res) => {
 
 //-----close report controllers-----
 
-export default {
+module.exports = {
     //report constrollers
   getNewUserRegistrationReport,
   getVerifiedInernshipReport,

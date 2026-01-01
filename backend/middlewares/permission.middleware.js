@@ -1,4 +1,4 @@
-import db from "../config/db.js";
+const db = require('../config/db.js');
 
 function checkPermission(moduleName, action) {
   return async function (req, res, next) {
@@ -67,4 +67,4 @@ function checkPermission(moduleName, action) {
   };
 }
 
-export default checkPermission;
+module.exports = checkPermission;

@@ -1,5 +1,5 @@
-import adminTable from "../tables/admin-table/admin.table.js";
-import userTable from "../tables/users/users.js"
+const adminTable = require("../tables/admin-table/admin.table.js");
+const userTable = require("../tables/users/users.js")
 const {
   verificationManagementTable,
   getAdminDashboardTable,
@@ -32,4 +32,4 @@ const initializeTables = async () => {
   await verificationTokens();
 };
 
-export default { initializeTables };
+module.exports = { initializeTables };

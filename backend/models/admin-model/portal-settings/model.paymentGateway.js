@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 /**
  * Portal Settings Module - Payment Gateway Settings Model
@@ -89,7 +89,7 @@ const updatePaymentGatewaySettings = async (paymentData) => {
   }
 };
 
-export default {
+module.exports = {
   getPaymentGatewaySettings,
   updatePaymentGatewaySettings
 };

@@ -1,7 +1,7 @@
-import express from "express";
-import asyncHandler from "../../middlewares/asyncHandler.js";
-import checkPermission from "../../middlewares/permission.middleware.js";
-import assessmentController from "../../controller/admin-controller/candidate-assessment.controller.js";
+const express = require('express');
+const asyncHandler = require('../../middlewares/asyncHandler.js');
+const checkPermission = require('../../middlewares/permission.middleware.js');
+const assessmentController = require('../../controller/admin-controller/candidate-assessment.controller.js');
 
 const router = express.Router();
 
@@ -137,5 +137,5 @@ router.get(
   asyncHandler(getAnswersByResultId)
 );
 
-export default router;
+module.exports = router;
 

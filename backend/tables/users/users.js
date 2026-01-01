@@ -1,4 +1,4 @@
-import db from '../../config/db.js'
+const db = require('../../config/db.js')
 
 const createUserTable = async () =>{
         await db.query(` CREATE TABLE IF NOT EXISTS users (
@@ -38,6 +38,6 @@ const verificationTokens = async () =>{
 console.log('tokens table created')
 }
 
-export default {createUserTable,
+module.exports = {createUserTable,
     verificationTokens
 }

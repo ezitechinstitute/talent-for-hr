@@ -1,6 +1,7 @@
-import notificationService from "../../models/admin-model/notification-management/model.notification.js";
+const notificationService = require('../../models/admin-model/notification-management/model.notification.js');
+const emailService = require('../../services/email.service.js');
 
-export const createNotification = async (req, res) => {
+const createNotification = async (req, res) => {
   const {
     user_id, user_type, title, message, reference_module,
     reference_id, email, email_subject, email_html,
@@ -46,7 +47,7 @@ export const createNotification = async (req, res) => {
   });
 };
 
-export const markNotificationAsRead = async (req, res) => {
+const markNotificationAsRead = async (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -64,7 +65,7 @@ export const markNotificationAsRead = async (req, res) => {
   });
 };
 
-export const getUnreadNotificationCount = async (req, res) => {
+const getUnreadNotificationCount = async (req, res) => {
   const { user_id, user_type } = req.query;
 
   if (!user_id || !user_type) {
@@ -83,4 +84,10 @@ export const getUnreadNotificationCount = async (req, res) => {
     success: true,
     unread_count: unreadCount,
   });
+};
+
+module.exports = {
+  createNotification,
+  markNotificationAsRead,
+  getUnreadNotificationCount,
 };
