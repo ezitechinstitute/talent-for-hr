@@ -9,6 +9,7 @@ const activityLogger = require("./middlewares/activityLogger.js");
 const systemErrorHandler = require("./middlewares/systemErrorHandler.js");
 // Startup Manager
 const startupManager = require("./startup-manager/startupManager.js");
+const testRouter = require("./routes/test.route.js");
 
 (async () => {
   await startupManager.startupManager();
@@ -39,6 +40,7 @@ const startupManager = require("./startup-manager/startupManager.js");
 
   app.use("/api/auth", authRouter);
   app.use("/api/admin", router);
+  app.use(testRouter);
 
   // System Error Handler Middleware
   app.use(systemErrorHandler);
