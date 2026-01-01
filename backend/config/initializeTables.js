@@ -1,5 +1,5 @@
-import adminTable from "../tables/admin-table/admin.table.js";
-import userTable from "../tables/users/users.js"
+const adminTable = require("../tables/admin-table/admin.table.js");
+const userTable = require("../tables/users/users.js")
 const {
   verificationManagementTable,
   getAdminDashboardTable,
@@ -18,7 +18,10 @@ const {
 } = userTable
 
 const initializeTables = async () => {
+   //for auth
+  await createUserTable();
   await verificationManagementTable();
+  await verificationTokens();
   await getAdminDashboardTable();
   await matchingAlgorithmControlTables();
   await createCMSTables();
@@ -27,9 +30,7 @@ const initializeTables = async () => {
   await notificationsTable();
   await createAssessmentTables();
   
-  //for auth
-  await createUserTable();
-  await verificationTokens();
+ 
 };
 
-export default { initializeTables };
+module.exports = { initializeTables };

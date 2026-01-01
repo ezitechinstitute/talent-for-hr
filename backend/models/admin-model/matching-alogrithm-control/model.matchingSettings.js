@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const getSettings = async () => {
   try {
@@ -50,4 +50,4 @@ const toggleAutoMatching = async (autoMatchingEnabled, adminId) => {
 
 
 
-export default { getSettings, updateSettings, toggleAutoMatching };
+module.exports = { getSettings, updateSettings, toggleAutoMatching };

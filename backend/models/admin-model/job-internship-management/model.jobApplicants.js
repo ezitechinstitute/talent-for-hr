@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const applyJob = async ({ job_id, candidate_id, resume_url, cover_letter, application_source }) => {
   const sql = `INSERT INTO job_applicants (job_id, candidate_id, resume_url, cover_letter, application_source)
@@ -68,7 +68,7 @@ const updateApplicationStatus = async (applicationId, jobId, status, updatedBy =
 };
 
 
-export default {
+module.exports = {
   applyJob,
   getApplicantsByJob,
   updateApplicationStatus,

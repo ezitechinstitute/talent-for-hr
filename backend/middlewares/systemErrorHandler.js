@@ -1,4 +1,4 @@
-import systemHealthAlertsModel from "../models/admin-model/admin-dashboard/model.systemHealth.js";
+const systemHealthAlertsModel = require('../models/admin-model/admin-dashboard/model.systemHealth.js');
 
 const systemErrorHandler = async (err, req, res, next) => {
   console.error("Error:", err.message);
@@ -30,4 +30,4 @@ const systemErrorHandler = async (err, req, res, next) => {
   }
 };
 
-export default systemErrorHandler;
+module.exports = systemErrorHandler;

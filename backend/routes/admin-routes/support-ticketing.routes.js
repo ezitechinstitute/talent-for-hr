@@ -1,7 +1,7 @@
-import express from "express";
-import asyncHandler from "../../middlewares/asyncHandler.js";
-import checkPermission from "../../middlewares/permission.middleware.js";
-import supportTicketingController from "../../controller/admin-controller/support-ticketing.controller.js";
+const express = require('express');
+const asyncHandler = require('../../middlewares/asyncHandler.js');
+const checkPermission = require('../../middlewares/permission.middleware.js');
+const supportTicketingController = require('../../controller/admin-controller/support-ticketing.controller.js');
 
 const router = express.Router();
 
@@ -56,5 +56,5 @@ router.get(
   asyncHandler(getTicketHistory)
 );
 
-export default router;
+module.exports = router;
 

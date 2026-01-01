@@ -1,7 +1,7 @@
 // These models are being imported from admin-model/verification-management
-import experienceVerification from "../../models/admin-model/verification-management/experience.verification.js";
-import skillVerification from "../../models/admin-model/verification-management/skill.verification.js";
-import { handleVerificationStatusNotification } from "../../models/admin-model/verification-management/helper-function/verificationNotification.service.js";
+const experienceVerification = require('../../models/admin-model/verification-management/experience.verification.js');
+const skillVerification = require('../../models/admin-model/verification-management/skill.verification.js');
+const { handleVerificationStatusNotification } = require('../../models/admin-model/verification-management/helper-function/verificationNotification.service.js');
 
 // experience verification
 const getAllPendingVerifications = async (req, res) => {
@@ -213,7 +213,7 @@ const updateAdminRemarks = async (req, res) => {
   });
 };
 
-export default {
+module.exports = {
 getAllPendingVerifications,
   viewDocument,
   updateVerificationStatus,

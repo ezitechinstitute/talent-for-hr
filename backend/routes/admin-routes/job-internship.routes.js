@@ -1,8 +1,8 @@
-import express from "express";
-import { upload } from "../../middlewares/multer.middlewares.js";
-import adminController from "../../controller/admin-controller/job-internship.controller.js";
-import asyncHandler from "../../middlewares/asyncHandler.js";
-import checkPermission from "../../middlewares/permission.middleware.js";
+const express = require('express');
+const { upload } = require('../../middlewares/multer.middlewares.js');
+const adminController = require('../../controller/admin-controller/job-internship.controller.js');
+const asyncHandler = require('../../middlewares/asyncHandler.js');
+const checkPermission = require('../../middlewares/permission.middleware.js');
 const {
   createJob, updateJob, publishJob, listJobs, getJob,
   jobsIncrementViews, applyForJob, getJobApplicants, updateJobApplicationStatus,
@@ -32,4 +32,4 @@ router.post("/internships/:id/apply",checkPermission("candidates", "create"),upl
 router.get("/internships/:id/applicants",checkPermission("internships", "read"),asyncHandler(getInternApplicants));
 router.put("/applications/:id/internships/:internshipId/status",checkPermission("internships", "update"),asyncHandler(updateInternApplicationStatus));
 
-export default router;
+module.exports = router;

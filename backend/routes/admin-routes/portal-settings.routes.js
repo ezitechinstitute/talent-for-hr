@@ -1,7 +1,7 @@
-import express from "express";
-import asyncHandler from "../../middlewares/asyncHandler.js";
-import checkPermission from "../../middlewares/permission.middleware.js";
-import portalSettingsController from "../../controller/admin-controller/portal-settings.controller.js";
+const express = require('express');
+const asyncHandler = require('../../middlewares/asyncHandler.js');
+const checkPermission = require('../../middlewares/permission.middleware.js');
+const portalSettingsController = require('../../controller/admin-controller/portal-settings.controller.js');
 
 const router = express.Router();
 
@@ -107,5 +107,5 @@ router.post(
   asyncHandler(createBackupRecord)
 );
 
-export default router;
+module.exports = router;
 

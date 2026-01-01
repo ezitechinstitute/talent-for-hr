@@ -1,4 +1,4 @@
-import rolePermissionModel from '../../models/admin-model/admin-role-permission/rolePermissionModel.js'
+const rolePermissionModel = require('../../models/admin-model/admin-role-permission/rolePermissionModel.js')
 
 const createRole = async (req,res)=>{
         const {name,description}=req.body
@@ -48,7 +48,7 @@ const deleteRole = async (req,res)=>{
        })
 }
 
-export default 
+module.exports = 
 {
     createRole,
     getAllRoles,

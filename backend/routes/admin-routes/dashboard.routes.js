@@ -1,7 +1,7 @@
-import express from "express";
-import getDashboardStats from "../../controller/admin-controller/dashboard.controller.js";
-import asyncHandler from "../../middlewares/asyncHandler.js";
-import checkPermission from "../../middlewares/permission.middleware.js";
+const express = require('express');
+const getDashboardStats = require('../../controller/admin-controller/dashboard.controller.js');
+const asyncHandler = require('../../middlewares/asyncHandler.js');
+const checkPermission = require('../../middlewares/permission.middleware.js');
 
 const router = express.Router();
 
@@ -12,4 +12,4 @@ router.get(
   asyncHandler(getDashboardStats)
 );
 
-export default router;
+module.exports = router;

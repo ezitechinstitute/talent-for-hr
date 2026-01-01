@@ -1,13 +1,13 @@
 // =============user_management controller functions===================
-import activateCandidate from "../../models/admin-model/user-management/model.activateCandidate.js";
-import deactivateCandidate from "../../models/admin-model/user-management/model.deactivateCandidate.js";
-import exportCandidatesCSV from "../../models/admin-model/user-management/model.exportCandidatesCSV.js";
-import getAllCandidates from "../../models/admin-model/user-management/model.getAllCandidates.js";
-import getCandidateById from "../../models/admin-model/user-management/model.getCandidateById.js";
-import getInternshipExperience from "../../models/admin-model/user-management/model.getInternshipExperience.js";
-import getSkillProfile from "../../models/admin-model/user-management/model.getSkillProfile.js";
-import resetCandidatePassword from "../../models/admin-model/user-management/model.resetCandidatePassword.js";
-import updateCandidateInfoById from "../../models/admin-model/user-management/model.updateCandidate.js";
+const activateCandidate = require("../../models/admin-model/user-management/model.activateCandidate.js");
+const deactivateCandidate = require("../../models/admin-model/user-management/model.deactivateCandidate.js");
+const exportCandidatesCSV = require("../../models/admin-model/user-management/model.exportCandidatesCSV.js");
+const getAllCandidates = require("../../models/admin-model/user-management/model.getAllCandidates.js");
+const getCandidateById = require("../../models/admin-model/user-management/model.getCandidateById.js");
+const getInternshipExperience = require("../../models/admin-model/user-management/model.getInternshipExperience.js");
+const getSkillProfile = require("../../models/admin-model/user-management/model.getSkillProfile.js");
+const resetCandidatePassword = require("../../models/admin-model/user-management/model.resetCandidatePassword.js");
+const updateCandidateInfoById = require("../../models/admin-model/user-management/model.updateCandidate.js");
 
 // View all candidates
 const viewAllCandidates = async (req, res) => {
@@ -261,7 +261,7 @@ const exportCandidatesCSVController = async (req, res) => {
   }
 };
 
-export default {
+module.exports = {
   viewAllCandidates,
   viewCandidateById,
   updateCandidateById,

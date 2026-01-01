@@ -1,9 +1,9 @@
-import initializeTables from "../config/initializeTables.js";
-import jobWorker from "../worker/jobWorker.js";
+const initializeTables = require('../config/initializeTables.js');
+const jobWorker = require('../worker/jobWorker.js');
 
 const startupManager = async () => {
   await initializeTables.initializeTables();
   await jobWorker.startWorker();
 };
 
-export default { startupManager };
+module.exports = { startupManager };

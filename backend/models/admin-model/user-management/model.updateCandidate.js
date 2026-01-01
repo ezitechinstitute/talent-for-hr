@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const updateCandidateInfoById = async (id, data) => {
   try {
@@ -38,4 +38,4 @@ const updateCandidateInfoById = async (id, data) => {
   }
 };
 
-export default updateCandidateInfoById;
+module.exports = updateCandidateInfoById;

@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 /**
  * Candidate Assessment Module - Answers Model
@@ -62,7 +62,7 @@ const getAnswerByQuestionId = async (resultId, questionId) => {
   }
 };
 
-export default {
+module.exports = {
   saveCandidateAnswers,
   getAnswersByResultId,
   getAnswerByQuestionId

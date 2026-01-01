@@ -1,7 +1,7 @@
-import express from "express";
-import verificationController from "../../controller/admin-controller/verification.controller.js";
-import checkPermission from "../../middlewares/permission.middleware.js"
-import asyncHandler from "../../middlewares/asyncHandler.js";
+const express = require('express');
+const verificationController = require('../../controller/admin-controller/verification.controller.js');
+const checkPermission = require('../../middlewares/permission.middleware.js')
+const asyncHandler = require('../../middlewares/asyncHandler.js');
 
 const router = express.Router();
 
@@ -46,4 +46,4 @@ router.get("/skill-view/:id",checkPermission("verifications", "read"), asyncHand
 router.put("/update-skill-status/:id",checkPermission("verifications", "update"), asyncHandler(updateSkillStatus));
 router.put("/update-admin-remarks/:id",checkPermission("verifications", "update"), asyncHandler(updateAdminRemarks));
 
-export default router;
+module.exports = router;

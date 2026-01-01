@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 /**
  * Portal Settings Module - SMS Settings Model
@@ -101,7 +101,7 @@ const testSMSConnection = async () => {
   }
 };
 
-export default {
+module.exports = {
   getSMSSettings,
   updateSMSSettings,
   testSMSConnection

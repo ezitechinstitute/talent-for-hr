@@ -1,6 +1,6 @@
 // These models are being imported from admin-model/support-ticketing
-import ticketModel from "../../models/admin-model/support-ticketing/model.tickets.js";
-import ticketMessagesModel from "../../models/admin-model/support-ticketing/model.ticketMessages.js";
+const ticketModel = require('../../models/admin-model/support-ticketing/model.tickets.js');
+const ticketMessagesModel = require('../../models/admin-model/support-ticketing/model.ticketMessages.js');
 
 // ==================== Support / Ticketing Module ====================
 
@@ -236,7 +236,7 @@ const getTicketHistory = async (req, res) => {
   }
 };
 
-export default {
+module.exports = {
   createTicket,
   listTickets,
   getTicketDetail,

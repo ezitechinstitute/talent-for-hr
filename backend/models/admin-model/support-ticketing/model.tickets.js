@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const ALLOWED_STATUS = ["open", "pending", "resolved", "closed"];
 const ALLOWED_PRIORITY = ["low", "medium", "high"];
@@ -130,7 +130,7 @@ const getHistory = async (ticket_id) => {
   }
 };
 
-export default {
+module.exports = {
   ALLOWED_STATUS,
   ALLOWED_PRIORITY,
   createTicket,

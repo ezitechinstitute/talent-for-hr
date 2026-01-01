@@ -1,40 +1,40 @@
-import db from "../../config/db.js";
+const db = require("../../config/db.js");
 
 // These models are being imported from admin-model/candidate-assessment
-import assessmentModel from "../../models/admin-model/candidate-assessment/model.assessments.js";
-import questionModel from "../../models/admin-model/candidate-assessment/model.questions.js";
-import resultModel from "../../models/admin-model/candidate-assessment/model.results.js";
-import answerModel from "../../models/admin-model/candidate-assessment/model.answers.js";
+const assessmentModel = require("../../models/admin-model/candidate-assessment/model.assessments.js");
+const questionModel = require("../../models/admin-model/candidate-assessment/model.questions.js");
+const resultModel = require("../../models/admin-model/candidate-assessment/model.results.js");
+const answerModel = require("../../models/admin-model/candidate-assessment/model.answers.js");
 
 // These models are being imported from admin-model/portal-settings
-import platformConfigModel from "../../models/admin-model/portal-settings/model.platformConfig.js";
-import smtpSettingsModel from "../../models/admin-model/portal-settings/model.smtpSettings.js";
-import smsSettingsModel from "../../models/admin-model/portal-settings/model.smsSettings.js";
-import paymentGatewayModel from "../../models/admin-model/portal-settings/model.paymentGateway.js";
-import databaseBackupModel from "../../models/admin-model/portal-settings/model.databaseBackup.js";
+const platformConfigModel = require("../../models/admin-model/portal-settings/model.platformConfig.js");
+const smtpSettingsModel = require("../../models/admin-model/portal-settings/model.smtpSettings.js");
+const smsSettingsModel = require("../../models/admin-model/portal-settings/model.smsSettings.js");
+const paymentGatewayModel = require("../../models/admin-model/portal-settings/model.paymentGateway.js");
+const databaseBackupModel = require("../../models/admin-model/portal-settings/model.databaseBackup.js");
 
 // These models are being imported from admin-model/support-ticketing
-import ticketModel from "../../models/admin-model/support-ticketing/model.tickets.js";
-import ticketMessagesModel from "../../models/admin-model/support-ticketing/model.ticketMessages.js";
+const ticketModel = require("../../models/admin-model/support-ticketing/model.tickets.js");
+const ticketMessagesModel = require("../../models/admin-model/support-ticketing/model.ticketMessages.js");
 
 // Utilities
-import { encrypt, decrypt, maskSensitiveData } from "../../utils/encryption.js";
-import {
+const { encrypt, decrypt, maskSensitiveData } = require("../../utils/encryption.js");
+const {
   isValidEmail,
   isValidHexColor,
   isValidPort,
   isValidURL,
   isValidAssessmentStatus,
   isValidQuestionType,
-} from "../../utils/validations.js";
+} = require("../../utils/validations.js");
 
 // These models are being imported from admin-model/activity-logs
-import activityLogsModel from "../../models/admin-model/activity-logs/model.activityLogs.js";
+const activityLogsModel = require("../../models/admin-model/activity-logs/model.activityLogs.js");
 
 // These are the models for notification management
 
-import emailService from "../../services/email.service.js";
-import notificationService from "../../models/admin-model/notification-management/model.notification.js";
+const emailService = require("../../services/email.service.js");
+const notificationService = require("../../models/admin-model/notification-management/model.notification.js");
 
 // ==================== Candidate Assessment Module ====================
 
@@ -1339,7 +1339,7 @@ const createBackupRecord = async (req, res) => {
   }
 };
 
-export default {
+module.exports = {
   // Assessment Controllers
   createAssessment,
   getAssessments,

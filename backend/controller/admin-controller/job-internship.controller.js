@@ -1,11 +1,11 @@
-import jobModel from "../../models/admin-model/job-internship-management/model.job.js";
-import applicantModel from "../../models/admin-model/job-internship-management/model.jobApplicants.js";
-import internshipsModel from "../../models/admin-model/job-internship-management/model.internships.js";
-import internApplicantModel from "../../models/admin-model/job-internship-management/model.internshipApplicants.js";
-import notificationService from "../../models/admin-model/notification-management/model.notification.js";
-import { uploadToCloudinary } from "../../utils/cloudinary.js";
-import db from "../../config/db.js";
-import emailService from "../../services/email.service.js";
+const jobModel = require('../../models/admin-model/job-internship-management/model.job.js');
+const applicantModel = require('../../models/admin-model/job-internship-management/model.jobApplicants.js');
+const internshipsModel = require('../../models/admin-model/job-internship-management/model.internships.js');
+const internApplicantModel = require('../../models/admin-model/job-internship-management/model.internshipApplicants.js');
+const notificationService = require('../../models/admin-model/notification-management/model.notification.js');
+const { uploadToCloudinary } = require('../../utils/cloudinary.js');
+const db = require('../../config/db.js');
+const emailService = require('../../services/email.service.js');
 
 const createJob = async (req, res) => {
   if (!["admin", "hr"].includes(req.user.role)) {
@@ -1385,7 +1385,7 @@ const internshipsIncrementViews = async (req, res) => {
   res.json({ success: true, message: "Internship view count incremented" });
 };
 
-export default {
+module.exports = {
   createJob,
   updateJob,
   publishJob,

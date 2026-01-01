@@ -1,4 +1,4 @@
-import db from "../../config/db.js";
+const db = require('../../config/db.js');
 
 const checkExistingUser = async (email) => {
   const [existing] = await db.query(`SELECT * FROM users WHERE email = ?`, [
@@ -72,7 +72,7 @@ const updatePassword = async (hashedPassword, email) => {
   };
 };
 
-export default {
+module.exports = {
   checkExistingUser,
   signup,
   code,

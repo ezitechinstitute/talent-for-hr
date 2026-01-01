@@ -1,4 +1,4 @@
-import db from "../../config/db.js";
+const db = require('../../config/db.js');
 
 // Admin Dashboard Table
 async function getAdminDashboardTable() {
@@ -361,7 +361,7 @@ async function matchingAlgorithmControlTables() {
 }
 
 // CMS (Control Management System) Tables
-export async function createCMSTables() {
+async function createCMSTables() {
   // Home Page Banners
   await db.query(`
        CREATE TABLE IF NOT EXISTS home_banners (
@@ -624,7 +624,7 @@ async function notificationsTable() {
   }
 }
 
-export default {
+module.exports = {
   getAdminDashboardTable,
   createAssessmentTables,
   verificationManagementTable,

@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const privacyPolicyModel = {
     async get() {
@@ -23,4 +23,4 @@ const privacyPolicyModel = {
     }
 };
 
-export default privacyPolicyModel;
+module.exports = privacyPolicyModel;

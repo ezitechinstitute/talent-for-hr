@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const termsModel = {
     async get() {
@@ -23,4 +23,4 @@ const termsModel = {
     }
 };
 
-export default termsModel;
+module.exports = termsModel;

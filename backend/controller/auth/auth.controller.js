@@ -1,13 +1,13 @@
-import db from "../../config/db.js";
-import { Resend } from "resend";
-import bcrypt from "bcryptjs";
-import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
-import crypto from "crypto";
-import utilsToken from "../../utils/generateToken.js";
+const db = require("../../config/db.js");
+const { Resend } = require("resend");
+const bcrypt = require("bcryptjs");
+const dotenv = require("dotenv");
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const utilsToken = require("../../utils/generateToken.js");
 dotenv.config();
 
-import authModel from "../../models/auth/auth.model.js";
+const authModel = require("../../models/auth/auth.model.js");
 const { generateAuthToken, generateRefreshToken } = utilsToken;
 
 //for email verification
@@ -296,7 +296,7 @@ const refreshAccessToken = async (req, res) => {
     accessToken: newAccessToken,
   });
 };
-export default {
+module.exports = {
   signup,
   verifyEmail,
   login,

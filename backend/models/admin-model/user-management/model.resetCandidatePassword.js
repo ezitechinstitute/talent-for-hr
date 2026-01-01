@@ -1,5 +1,5 @@
-import db from "../../../config/db.js";
-import bcrypt from "bcryptjs";
+const db = require('../../../config/db.js');
+const bcrypt = require('bcryptjs');
 
 const resetCandidatePassword = async (id, newPassword) => {
     const hashed = await bcrypt.hash(newPassword, 10);
@@ -10,4 +10,4 @@ const resetCandidatePassword = async (id, newPassword) => {
     return result;
 };
 
-export default resetCandidatePassword;
+module.exports = resetCandidatePassword;

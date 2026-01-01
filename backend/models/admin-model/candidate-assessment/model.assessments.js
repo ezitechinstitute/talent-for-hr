@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 // Get all assessments
 const getAllAssessments = async () => {
@@ -131,7 +131,7 @@ const getAssessmentsByType = async (type) => {
   }
 };
 
-export default {
+module.exports = {
   getAllAssessments,
   getAssessmentById,
   getAssessmentWithQuestions,

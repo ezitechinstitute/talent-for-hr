@@ -1,7 +1,7 @@
-import express from "express";
-import matchingAlgorithmController from "../../controller/admin-controller/matchingAlgorithm.controller.js";
-import asyncHandler from "../../middlewares/asyncHandler.js";
-import checkPermission from "../../middlewares/permission.middleware.js";
+const express = require('express');
+const matchingAlgorithmController = require('../../controller/admin-controller/matchingAlgorithm.controller.js');
+const asyncHandler = require('../../middlewares/asyncHandler.js');
+const checkPermission = require('../../middlewares/permission.middleware.js');
 
 const router = express.Router();
 
@@ -40,4 +40,4 @@ router.get(
   asyncHandler(getUserRecommendations)
 );
 
-export default router;
+module.exports = router;

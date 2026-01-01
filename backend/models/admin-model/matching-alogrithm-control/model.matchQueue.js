@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const enqueueJob = async (jobId, source = "manual") => {
   const sql = "INSERT INTO match_queue (job_id, trigger_source) VALUES (?, ?)";
@@ -46,4 +46,4 @@ const matchingListInternships = async () => {
 
 
 
-export default { enqueueJob, updateStatus, matchingListJobs, matchingListInternships };
+module.exports = { enqueueJob, updateStatus, matchingListJobs, matchingListInternships };

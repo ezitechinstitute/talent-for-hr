@@ -1,4 +1,4 @@
-import db from '../../../config/db.js';
+const db = require('../../../config/db.js');
 
 const activateCandidate = async (id) => {
   try {
@@ -17,4 +17,4 @@ const activateCandidate = async (id) => {
   }
 };
 
-export default activateCandidate;
+module.exports = activateCandidate;

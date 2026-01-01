@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 // Add message to ticket
 const addMessage = async (ticket_id, sender_type, sender_id, message, attachment_url) => {
@@ -32,7 +32,7 @@ const getMessages = async (ticket_id) => {
   }
 };
 
-export default {
+module.exports = {
   addMessage,
   getMessages,
 };

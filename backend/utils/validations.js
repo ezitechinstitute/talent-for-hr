@@ -1,17 +1,13 @@
 /**
  * Validation utilities for portal settings and assessments
  */
-const isValidEmail = (email) => {
-  const re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-  return re.test(String(email).toLowerCase());
-};
 
 /**
  * Validate email format
  * @param {string} email - Email to validate
  * @returns {boolean} True if valid email
  */
-export const isValidEmail = (email) => {
+const isValidEmail = (email) => {
   if (!email) return false;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
@@ -23,10 +19,6 @@ export const isValidEmail = (email) => {
  * @returns {boolean} True if valid hex color
  */
 const isValidHexColor = (color) => {
-  const re = /^#([0-9A-F]{3}){1,2}$/i;
-  return re.test(String(color));
-};
-export const isValidHexColor = (color) => {
   if (!color) return false;
   const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
   return hexRegex.test(color);
@@ -38,10 +30,6 @@ export const isValidHexColor = (color) => {
  * @returns {boolean} True if valid port
  */
 const isValidPort = (port) => {
-  const num = Number(port);
-  return Number.isInteger(num) && num > 0 && num < 65536;
-};
-export const isValidPort = (port) => {
   if (!port) return false;
   const portNum = parseInt(port);
   return portNum >= 1 && portNum <= 65535;
@@ -53,14 +41,6 @@ export const isValidPort = (port) => {
  * @returns {boolean} True if valid URL
  */
 const isValidURL = (url) => {
-  try {
-    new URL(url);
-    return true;
-  } catch (err) {
-    return false;
-  }
-};
-export const isValidURL = (url) => {
   if (!url) return false;
   try {
     new URL(url);
@@ -76,10 +56,6 @@ export const isValidURL = (url) => {
  * @returns {boolean} True if valid status
  */
 const isValidAssessmentStatus = (status) => {
-  const allowed = ["draft", "published", "archived"];
-  return allowed.includes(status);
-};
-export const isValidAssessmentStatus = (status) => {
   return ['draft', 'published', 'closed'].includes(status);
 };
 
@@ -89,9 +65,9 @@ export const isValidAssessmentStatus = (status) => {
  * @returns {boolean} True if valid type
  */
 const isValidQuestionType = (type) => {
-  const allowed = ["multiple-choice", "true-false", "short-answer"];
-  return allowed.includes(type);
+  return ['MCQ', 'coding', 'scenario'].includes(type);
 };
+
 module.exports = {
   isValidEmail,
   isValidHexColor,
@@ -99,8 +75,5 @@ module.exports = {
   isValidURL,
   isValidAssessmentStatus,
   isValidQuestionType,
-};
-export const isValidQuestionType = (type) => {
-  return ['MCQ', 'coding', 'scenario'].includes(type);
 };
 

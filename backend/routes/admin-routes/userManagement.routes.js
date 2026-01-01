@@ -1,7 +1,7 @@
-import express from "express";
-import asyncHandler from "../../middlewares/asyncHandler.js";
-import userManagementController from "../../controller/admin-controller/userManagement.controller.js";
-import checkPermission from "../../middlewares/permission.middleware.js";
+const express = require('express');
+const asyncHandler = require('../../middlewares/asyncHandler.js');
+const userManagementController = require('../../controller/admin-controller/userManagement.controller.js');
+const checkPermission = require('../../middlewares/permission.middleware.js');
 const router = express.Router();
 
 const {
@@ -46,4 +46,4 @@ router.post(
   asyncHandler(resetCandidatePasswordController)
 );
 
-export default router
+module.exports = router

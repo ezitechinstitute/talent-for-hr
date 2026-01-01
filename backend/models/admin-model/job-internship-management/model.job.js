@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 const createJob = async (job) => {
   const sql = `
@@ -170,7 +170,7 @@ const jobIncrementViews = async (id) => {
   return res;
 };
 
-export default {
+module.exports = {
   createJob,
   getJobById,
   updateJob,

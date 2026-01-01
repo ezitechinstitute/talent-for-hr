@@ -1,4 +1,4 @@
-import db from "../../../config/db.js";
+const db = require('../../../config/db.js');
 
 // Save a new activity log
 const saveActivityLog = async (log) => {
@@ -19,7 +19,7 @@ const getRecentActivityLogs = async () => {
   return rows;
 };
 
-export default {
+module.exports = {
   saveActivityLog,
   getRecentActivityLogs,
 };
