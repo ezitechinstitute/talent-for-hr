@@ -19,9 +19,9 @@ const {
 
 const initializeTables = async () => {
    //for auth
-  await createUserTable();
   await verificationTokens();
   await verificationManagementTable();
+  await createUserTable();
   await getAdminDashboardTable();
   await matchingAlgorithmControlTables();
   await createCMSTables();
