@@ -18,7 +18,7 @@ const getAll = async () =>{
 }
 
 const assignRole = async (admin_role_id,userId) =>{
-    const sql =`UPDATE users SET admin_role_id = ? WHERE id = ? AND role = 'admin'`
+    const sql =`UPDATE admin_users SET admin_role_id = ? WHERE id = ? AND role = 'admin'`
     const [result] = await db.query(sql,[admin_role_id,userId])
     return result
 }

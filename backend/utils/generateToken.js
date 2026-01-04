@@ -7,7 +7,7 @@ const generateAuthToken = (user) => {
         id: user.id,
         email: user.email,
         role: user.role,
-        role_id: user.admin_role_id,
+        role_id: user.admin_role_id || null,
     };
     const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
     return accessToken;
@@ -18,7 +18,7 @@ const generateRefreshToken = (user) => {
         id: user.id,
         email: user.email,
         role: user.role,
-        role_id: user.admin_role_id,
+        role_id: user.admin_role_id|| null,
     };
     const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN, { expiresIn: '7d' });
     return refreshToken;

@@ -15,8 +15,8 @@ function checkPermission(moduleName, action) {
        console.log(req.user.role_id)
       const roleId = req.user.role_id;
 
-      // Super admin bypass (optional but recommended)
-      if (req.user.role === "super_admin") {
+      // Super admin bypass 
+      if (req.user.role === "superadmin") {
         return next();
       }
 

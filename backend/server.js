@@ -11,9 +11,10 @@ const systemErrorHandler = require("./middlewares/systemErrorHandler.js");
 const startupManager = require("./startup-manager/startupManager.js");
 const testRouter = require("./routes/test.route.js");
 
-(async () => {
-  await startupManager.startupManager();
 
+(async () => {
+
+  await startupManager.startupManager();
   dotenv.config();
 
   const PORT = process.env.PORT || 5000;
@@ -48,5 +49,7 @@ const testRouter = require("./routes/test.route.js");
   // Start Server
   app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
+
+    
   });
 })();

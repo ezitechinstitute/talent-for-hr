@@ -529,7 +529,6 @@ const updateJobApplicationStatus = async (req, res) => {
     })
   };
 
-
   // Candidate email
   if (data.candidate_email) {
     await emailService.sendEmail({

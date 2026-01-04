@@ -1,5 +1,5 @@
 const express = require('express');
-const adminController = require('../../controller/admin-controller/admin.contoller.js');
+const adminController = require('../../controller/admin-controller/notification.controller.js');
 const asyncHandler = require('../../middlewares/asyncHandler.js');
 const checkPermission = require('../../middlewares/permission.middleware.js');
 const { createNotification, markNotificationAsRead, getUnreadNotificationCount } = adminController;

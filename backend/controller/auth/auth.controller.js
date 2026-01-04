@@ -49,7 +49,7 @@ const signup = async (req, res) => {
   }
   // for email verification
   const token = crypto.randomBytes(32).toString("hex");
-  console.log(token);
+  
   const expiryVerify = new Date(Date.now() + 15 * 60 * 1000);
   //setting up token and its expiry in tokens table for verification of email
   await db.query(`UPDATE tokens SET token=?,expiryVerify=? WHERE email=?`, [
@@ -114,58 +114,108 @@ const verifyEmail = async (req, res) => {
 const login = async (req, res) => {
   const { email, password, role } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ message: "Email and password are required" });
-  }
-  // Check user email
-  const existingUser = await authModel.checkExistingUser(email);
-  if (!existingUser) {
-    return res.status(400).json({ message: "Invalid credentials" });
-  }
-  //getting data from database using email
-  const user = await authModel.getUserByEmail(email);
-
-  //check password(comparing)
-  const hashedPassword = user?.password;
-
-  const isMatch = await bcrypt.compare(password, hashedPassword);
-  if (!isMatch) {
-    return res.status(400).json({ message: "password is incorrect" });
-  }
-
-  if(user.role === 'admin' &&!user.admin_role_id){
-   return res.status(403).json({
-    message:"Admin role not assigned yet"
-   })
-  }
-
-  const accessToken = generateAuthToken(user);
-  const refreshToken = generateRefreshToken(user);
-
-  await db.query(`UPDATE tokens SET refreshToken=? WHERE email=?`, [
-    refreshToken,
-    email,
-  ]);
-  //if hr account is not approved
-  if (role === "hr" && !user.isApproved) {
-    return res.status(403).json({
-      message: "Your account is not approved by admin yet.",
+  if (!email || !password || !role) {
+    return res.status(400).json({
+      message: "Email, password and role are required",
     });
   }
 
-  res.cookie("authToken", refreshToken, {
-    httpOnly: true, // Cannot be accessed by JS (security)
-    secure: true, // Send only over HTTPS
-    sameSite: "Lax", // Prevent CSRF
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-  });
+  let user;
+  let rows;
 
-  res.status(200).json({
-    success: true,
-    message: "Login successfully",
-    user,
-    accessToken,
-  });
+  /* ================= ADMIN USERS ================= */
+  if (role === "admin" || role === "superadmin") {
+    [rows] = await db.query(
+      `SELECT * FROM admin_users WHERE email = ? AND role = ?`,
+      [email, role]
+    );
+
+    if (!rows.length) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    user = rows[0];
+
+    // Generate tokens
+    const accessToken = generateAuthToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    // Upsert into admin tokens table
+    await db.query(
+      `INSERT INTO tokens_admin (email, refreshToken)
+       VALUES (?, ?)
+       ON DUPLICATE KEY UPDATE refreshToken = VALUES(refreshToken)`,
+      [email, refreshToken]
+    );
+
+    // Send cookie
+    res.cookie("authToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "Lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Login successful",
+      data: user,
+      accessToken,
+    });
+  } else if (role === "candidate" || role === "hr" || role === "company") {
+
+  /* ================= NORMAL USERS ================= */
+    rows = await authModel.getUserByEmail(email);
+
+    if (!rows.length) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    user = rows[0];
+
+    // Email verification check
+    if (!user.isVerified) {
+      return res.status(403).json({ message: "Please verify your email" });
+    }
+
+    // HR approval check
+    if (role === "hr" && !user.isApproved) {
+      return res.status(403).json({
+        message: "Your account is not approved by admin yet.",
+      });
+    }
+
+    // Generate tokens
+    const accessToken = generateAuthToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    // Upsert into normal users tokens table
+    await db.query(
+      `INSERT INTO tokens (email, refreshToken)
+       VALUES (?, ?)
+       ON DUPLICATE KEY UPDATE refreshToken = VALUES(refreshToken)`,
+      [email, refreshToken]
+    );
+
+    // Send cookie
+    res.cookie("authToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "Lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Login successful",
+      data: user,
+      accessToken,
+    });
+  } else {
+
+  /* ================= INVALID ROLE ================= */
+    return res.status(400).json({ message: "Invalid role" });
+  }
 };
 
 const logout = async (req, res) => {
@@ -177,8 +227,14 @@ const logout = async (req, res) => {
     });
   }
 
-  // Remove refresh token from DB
+  // Remove refresh token from user DB
   await authModel.clearRefreshToken(refreshToken);
+
+  //remove refresh token from admin DB
+  await db.query(
+    `UPDATE tokens_admin SET refreshToken = NULL WHERE refreshToken = ?`,
+    [refreshToken]
+  );
 
   //clear cookie
   res.clearCookie("authToken", {
@@ -193,109 +249,195 @@ const logout = async (req, res) => {
   });
 };
 
-//forgot password
 const forgetPassword = async (req, res) => {
   const { email } = req.body;
 
-  // Check user email
-  const existingUser = await authModel.checkExistingUser(email);
-  if (!existingUser) {
-    return res.status(400).json({ message: "Invalid credentials" });
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
   }
 
-  const user = await authModel.getUserByEmail(email);
+  let user;
+  let table; // to track which table to update token in
 
-  //Generate token
+  // Check admin_users table
+  const adminRows = await authModel.getAdminByEmail(email);
+
+  if (adminRows.length) {
+    user = adminRows[0];
+    table = "tokens_admin"; // use admin tokens table
+  } else {
+    // Check users table
+    const userRows = await authModel.getUserByEmail(email);
+
+    if (!userRows.length) {
+      return res.status(400).json({ message: "Email not found" });
+    }
+
+    user = userRows[0];
+    table = "tokens"; // use normal users tokens table
+  }
+
+  //  Generate token
   const resetToken = crypto.randomBytes(32).toString("hex");
+  const resetTokenExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 
-  // Expiry: 1 hour from now
-  const resetTokenExpiry = new Date(Date.now() + 60 * 60 * 1000);
-
-  //setting resetToken and expirytime
+  //  Upsert token into the correct token table
   await db.query(
-    "UPDATE tokens SET resetToken = ?, resetTokenExpiry = ? WHERE email = ?",
-    [resetToken, resetTokenExpiry, email]
+    `INSERT INTO ${table} (email, resetToken, resetTokenExpiry)
+     VALUES (?, ?, ?)
+     ON DUPLICATE KEY UPDATE resetToken = VALUES(resetToken), resetTokenExpiry = VALUES(resetTokenExpiry)`,
+    [email, resetToken, resetTokenExpiry]
   );
 
-  //reset password link
-  const mail = await resend.emails.send({
-    //add website domain here and verify it in resend website
-    from: `YourApp ${process.env.DOMAIN}`,
+  //  Send reset link email
+  await resend.emails.send({
+    from: `YourApp <${process.env.DOMAIN}>`,
     to: email,
     subject: "Your reset password link",
-    html: `<p>Click the link below to reset your password<p>
-      <p><a href='${process.env.CLIENT_URI}/reset-password/${resetToken}'>Reset Link</a>`,
+    html: `<p>Click the link below to reset your password:</p>
+           <p><a href='${process.env.CLIENT_URI}/reset-password/${resetToken}'>Reset Link</a></p>`,
   });
 
   res.status(200).json({
     success: true,
-    message: "Reset link sent to your mail check it",
+    message: `Reset link sent to your email. Check it!`,
   });
 };
 
 const resetPassword = async (req, res) => {
   const { resetToken } = req.params;
-
   const { password } = req.body;
 
-  //getting user info
-  const [rows] = await db.query(`SELECT * FROM tokens WHERE resetToken=?`, [
-    resetToken,
-  ]);
-  const user = rows[0];
+  if (!password) {
+    return res.status(400).json({ message: "Password is required" });
+  }
 
-  //check resetTokenExpiry
-  if (new Date(user.resetTokenExpiry) < new Date()) {
+  let user;
+  let userType;
+  let email;
+
+  // Check admin token table
+  const [adminRows] = await db.query(
+    `SELECT * FROM tokens_admin WHERE resetToken = ?`,
+    [resetToken]
+  );
+
+  if (adminRows.length) {
+    user = adminRows[0];
+    userType = "admin";
+    email = user.email;
+  } else {
+    //  Check normal users token table
+    const [userRows] = await db.query(
+      `SELECT * FROM tokens WHERE resetToken = ?`,
+      [resetToken]
+    );
+
+    if (!userRows.length) {
+      return res.status(400).json({ message: "Invalid or expired token" });
+    }
+
+    user = userRows[0];
+    userType = "user";
+    email = user.email;
+  }
+
+  // Check if token has expired
+  if (!user.resetTokenExpiry || new Date(user.resetTokenExpiry) < new Date()) {
     return res.status(400).json({ message: "Token expired" });
   }
 
-  //hashing new password
-  const genSalt = 10;
-  const hashedPassword = await bcrypt.hash(password, genSalt);
+  //  Hash the new password
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  //password updation
-  await authModel.updatePassword(hashedPassword, user.email);
+  // Update password in the correct table
+  if (userType === "admin") {
+    await db.query(`UPDATE admin_users SET password = ? WHERE email = ?`, [
+      hashedPassword,
+      email,
+    ]);
+  } else {
+    await db.query(`UPDATE users SET password = ? WHERE email = ?`, [
+      hashedPassword,
+      email,
+    ]);
+  }
 
-  res.status(200).json({
-    message: "password reset successfully",
-  });
+  //  Clear the reset token
+  const tokenTable = userType === "admin" ? "tokens_admin" : "tokens";
+  await db.query(
+    `UPDATE ${tokenTable} SET resetToken = NULL, resetTokenExpiry = NULL WHERE email = ?`,
+    [email]
+  );
+
+  res.status(200).json({ message: "Password reset successfully" });
 };
 
 const refreshAccessToken = async (req, res) => {
   const refreshToken = req.cookies.authToken;
+
   if (!refreshToken) {
-    res.status(401).json({
-      message: "No refresh token",
-    });
+    return res.status(401).json({ message: "No refresh token" });
   }
 
-  //verify refresh token
   const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN);
+  if (!decoded) {
+    return res.status(401).json({ message: "Invalid or expired token" });
+  }
 
-  //check db for token existence
-  const [rows] = await db.query("SELECT * FROM users WHERE id = ? ", [
-    decoded.id,
+  const userId = decoded.id;
+
+  let user;
+  let table;
+  let tokenTable;
+
+  // Check admin_users
+  const [adminRows] = await db.query(`SELECT * FROM admin_users WHERE id = ?`, [
+    userId,
   ]);
-  const [refresh_Token] = await db.query(
-    `SELECT * FROM tokens WHERE refreshToken=?`,
-    [refreshToken]
-  );
-  if (refresh_Token.length === 0)
-    return res.status(401).json({
-      message: "Invalid refresh token",
-    });
 
-  //generate new access token
+  if (adminRows.length) {
+    user = adminRows[0];
+    table = "admin_users";
+    tokenTable = "tokens_admin";
+  } else {
+    //  Check normal users
+    const [userRows] = await db.query(`SELECT * FROM users WHERE id = ?`, [
+      userId,
+    ]);
+
+    if (!userRows.length) {
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    user = userRows[0];
+    table = "users";
+    tokenTable = "tokens";
+  }
+
+  // Check DB for refresh token in the correct token table
+  const [tokenRow] = await db.query(
+    `SELECT * FROM ${tokenTable} WHERE refreshToken = ? AND email = ?`,
+    [refreshToken, user.email]
+  );
+
+  if (!tokenRow.length) {
+    return res.status(401).json({ message: "Invalid refresh token" });
+  }
+
+  // Generate new access token
   const newAccessToken = generateAuthToken({
-    id: decoded.id,
-    email: decoded.email,
-    role: decoded.role,
-    admin_role_id: decoded.role_id,
+    id: user.id,
+    email: user.email,
+    role: user.role,
+    admin_role_id: user.admin_role_id || null,
   });
+
   res.json({
     accessToken: newAccessToken,
   });
 };
+
 module.exports = {
   signup,
   verifyEmail,

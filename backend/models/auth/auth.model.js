@@ -7,6 +7,8 @@ const checkExistingUser = async (email) => {
   return existing;
 };
 
+
+
 const signup = async (name, email, hashedPassword, role) => {
   const sql = `INSERT INTO users(
     name,
@@ -46,31 +48,15 @@ const clearRefreshToken = async (refreshToken) => {
 const getUserByEmail = async (email) => {
   const sql = `SELECT * FROM users WHERE email=?`;
   const [row] = await db.query(sql, [email]);
-  return row[0];
+  return row;
 };
 
-const updatePassword = async (hashedPassword, email) => {
-  //updating password in users table
-  const updatePasswordSql = `UPDATE users SET password=? WHERE email=?`;
-  // clearing up token that was required for password reset and after it not needed
-  const clearTokenSql = `
-    UPDATE tokens 
-    SET resetToken=NULL, resetTokenExpiry=NULL 
-    WHERE email=?
-  `;
-
-  const [passwordResult] = await db.query(updatePasswordSql, [
-    hashedPassword,
-    email,
-  ]);
-
-  const [tokenResult] = await db.query(clearTokenSql, [email]);
-
-  return {
-    passwordUpdated: passwordResult,
-    tokenCleared: tokenResult,
-  };
+const getAdminByEmail = async (email) => {
+  const sql = `SELECT * FROM admin_users WHERE email=?`;
+  const [row] = await db.query(sql, [email]);
+  return row;
 };
+
 
 module.exports = {
   checkExistingUser,
@@ -79,5 +65,5 @@ module.exports = {
   verifyEmail,
   clearRefreshToken,
   getUserByEmail,
-  updatePassword,
+  getAdminByEmail
 };

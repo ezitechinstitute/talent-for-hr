@@ -176,14 +176,17 @@ async function getAdminDashboardTable() {
   );
   `);
 
-  await db.query(`
+}
+
+async function createAdminRolesAndPermissionsTable(){
+    await db.query(`
     CREATE TABLE IF NOT EXISTS admin_roles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
     description VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+)ENGINE=InnoDB;
 `);
 
   await db.query(
@@ -602,7 +605,6 @@ async function createSupportTicketTables() {
   }
 }
 // Notification module Table
-
 async function notificationsTable() {
   try {
     await db.query(`
@@ -627,6 +629,7 @@ async function notificationsTable() {
 module.exports = {
   getAdminDashboardTable,
   createAssessmentTables,
+  createAdminRolesAndPermissionsTable,
   verificationManagementTable,
   matchingAlgorithmControlTables,
   createCMSTables,

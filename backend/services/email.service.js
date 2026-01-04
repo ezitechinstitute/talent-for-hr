@@ -1,24 +1,27 @@
-const nodemailer = require("nodemailer");
-const fs = require("fs");
+const { Resend } = require("resend");
+if (!process.env.RESEND_API_KEY) {
+  throw new Error("RESEND_API_KEY missing");
+}
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+if (!process.env.DOMAIN) {
+  throw new Error("EMAIL_FROM missing");
+}
 
-const sendEmail = async ({ to, subject, html, attachments = [] }) => {
-  return transporter.sendMail({
-    from: `"Talent For HR" <${process.env.SMTP_USER}>`,
-    to,
-    subject,
-    html,
-    attachments,
+const resend = new Resend(process.env.RESEND_API_KEY);
+let queue = Promise.resolve();
+
+const sendEmail = ({ to, subject, html }) => {
+  queue = queue.then(async () => {
+    await new Promise((r) => setTimeout(r, 700));
+    return resend.emails.send({
+      from: process.env.DOMAIN,
+      to,
+      subject,
+      html,
+    });
   });
+
+  return queue;
 };
 
 module.exports = { sendEmail };
