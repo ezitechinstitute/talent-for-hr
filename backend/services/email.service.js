@@ -1,4 +1,6 @@
 const { Resend } = require("resend");
+require("dotenv").config();
+
 if (!process.env.RESEND_API_KEY) {
   throw new Error("RESEND_API_KEY missing");
 }
